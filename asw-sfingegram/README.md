@@ -104,12 +104,6 @@ Si veda la descrizione del progetto sul sito web del corso di [Architettura dei 
 
 ---
 
-## Descrizione delle attività da svolgere 
-
-Si veda la descrizione del progetto sul sito web del corso di [Architettura dei sistemi software](http://cabibbo.dia.uniroma3.it/asw/).
-
----
-
 ## Attività svolte dal team
 Descrizione sintetica delle tecnologie utilizzate
 * Basi di dati MySQL per i servizi enigmi, connessioni e enigmi-seguiti
