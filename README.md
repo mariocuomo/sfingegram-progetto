@@ -16,7 +16,7 @@ Al termine una descrizione delle modifiche apportate dal team.
 
 # SFINGEGRAM 
 
-Progetto del corso di Analisi e progettazione del software per l'anno accademico 2020-2021. 
+Progetto del corso di Architettura dei Sistemi Software per l'anno accademico 2020-2021. 
 
 
 ## Descrizione di questo progetto 
