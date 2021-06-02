@@ -1,0 +1,13 @@
+include 'enigmi'
+include 'connessioni'
+include 'enigmi-seguiti'
+include 'api-gateway'
+include 'common'
+
+rootProject.name = 'asw-sfingegram'
+
+project(':enigmi').name = 'enigmi'
+project(':connessioni').name = 'connessioni'
+project(':enigmi-seguiti').name = 'enigmi-seguiti'
+project(':api-gateway').name = 'api-gateway'
+

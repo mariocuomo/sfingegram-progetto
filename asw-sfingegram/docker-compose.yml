@@ -1,0 +1,99 @@
+version: "3.3"
+
+services:
+  consul:
+    image: consul:latest
+    networks:
+        - asw-net
+
+  enigmi-mysql:
+    image: mysql:5.7
+    environment:
+        MYSQL_DATABASE: "db"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+        MYSQL_ROOT_PASSWORD: "rootpassword"
+    networks:
+        - asw-net
+
+  enigmi-seguiti-mysql:
+    image: mysql:5.7
+    environment:
+        MYSQL_DATABASE: "db"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+        MYSQL_ROOT_PASSWORD: "rootpassword"
+    networks:
+        - asw-net
+
+  connessioni-mysql:
+    image: mysql:5.7
+    environment:
+        MYSQL_DATABASE: "db"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+        MYSQL_ROOT_PASSWORD: "rootpassword"
+    networks:
+        - asw-net
+
+  api-gateway:
+    build: ./api-gateway
+    image: api-gateway
+    networks:
+        - asw-net
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "consul"
+
+  connessioni:
+    build: ./connessioni
+    image: connessioni 
+    networks:
+        - asw-net
+    depends_on:
+      - connessioni-mysql
+      - consul
+      - kafka
+
+  enigmi:
+    build: ./enigmi
+    image: enigmi
+    networks:
+        - asw-net
+    depends_on:
+      - enigmi-mysql
+      - consul
+      - kafka
+
+  enigmi-seguiti:
+    build: ./enigmi-seguiti
+    image: enigmi-seguiti
+    networks:
+        - asw-net
+    depends_on:
+      - enigmi-seguiti-mysql
+      - consul
+      - kafka
+
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    networks:
+        - asw-net
+  
+  kafka:
+    image: wurstmeister/kafka
+    networks:
+        - asw-net
+    depends_on:
+        - zookeeper
+    environment:
+        KAFKA_ADVERTISED_HOST_NAME: kafka
+        KAFKA_ADVERTISED_PORT: 9092
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_CREATE_TOPICS: "enigmi:4:1,connessioni:4:1"
+
+networks:
+    asw-net:
+        driver: bridge
