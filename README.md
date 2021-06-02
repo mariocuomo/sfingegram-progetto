@@ -64,9 +64,7 @@ L'applicazione *Sfingegram* è composta dai seguenti microservizi:
 
 Per eseguire questo progetto: 
 
-* avviare *Consul* eseguendo lo script `start-consul.sh` 
-
-* per avviare l'applicazione *Sfingegram*, eseguire lo script `run-sfingegram.sh` 
+* avviare *Sfingegram* eseguendo lo script `start-sfingegram.sh` 
 
 * per inizializzare le basi di dati con dei dati di esempio, eseguire gli script `do-init-enigmi.sh` e `do-init-connessioni.sh` 
 
@@ -97,11 +95,29 @@ Ed inoltre:
 
 * lo script `do-post-altre-connessioni.sh` aggiunge nuove connessioni 
 
-Alla fine, l'applicazione può essere arrestata usando lo script `stop-java-processes.sh` (**da usare con cautela!**). 
-
-Inoltre, *Consul* può essere arrestato con lo script `stop-consul.sh`. 
+Alla fine, l'applicazione può essere arrestata usando lo script `stop-sfingegram.sh`
 
 
 ## Descrizione delle attività da svolgere 
 
 Si veda la descrizione del progetto sul sito web del corso di [Architettura dei sistemi software](http://cabibbo.dia.uniroma3.it/asw/).
+
+---
+
+## Attività svolte dal team
+Descrizione sintetica delle tecnologie utilizzate
+* Basi di dati MySQL per i servizi enigmi, connessioni e enigmi-seguiti
+* Docker-Compose per comporre i container
+* Kafka per realizzare canali per messaggi tra i servizi
+
+L’iter che abbiamo seguito per realizzare le modifiche è stato il seguente.
+
+Per prima cosa abbiamo containerizzato i servizi impostando i file *docker-compose.yml* e *Dockerfile*. Nel file docker-compose.yml abbiamo descritto – oltre ai container relativi ai servizi già presenti – i 2 container sui quali girano le basi di dati **MySQL**. Un ulteriore container è quello relativo al servizio **consul**.
+
+La seconda operazione è stata quella di integrare **Kafka** e **ZooKeeper** – entrambi in due ulteriori container. In particolare, abbiamo impostato due canali Kafka: *enigmi* e *connessioni*. Il servizio enigmi pubblica sul primo, il servizio connessioni sul secondo (entrami i servizi si comportano quindi come publisher). Il servizio enigmi-seguiti è un subscriber dei due canali.
+Per cercare di minimizzare la ripetizione del codice, abbiamo definito un progetto comune: **common**. Tale progetto contiene classi che descrivono la struttura dei messaggi scambiati.<br>
+`NOTA` sul canale *connessioni* si ha la pubblicazione sia delle connessioni utente-autore che di quelle utente-tipo. La differenziazione consiste nel tipo di messaggio inviato.
+
+La terza operazione è stata quella di modificare la logica del servizio enigmi-seguiti. 
+Abbiamo definito un ulteriore container che contiene la base di dati per questo servizio.
+In prima battuta è stata realizzata la prima soluzione proposta che poi si è rivelata propedeutica per adottare la seconda.
