@@ -132,7 +132,8 @@ Per cercare di minimizzare la ripetizione del codice, abbiamo definito un proget
 
 La terza operazione è stata quella di modificare la logica del servizio enigmi-seguiti. 
 Abbiamo definito un ulteriore container che contiene la base di dati per questo servizio.
-In prima battuta è stata realizzata la prima soluzione proposta che poi si è rivelata propedeutica per adottare la seconda.
+In prima battuta è stata realizzata la prima soluzione proposta che poi si è rivelata propedeutica per adottare la seconda.<br>
+È stato applicato il pattern **CQRS(Command-Query Responsibility Segregation)** usando viste materializzate per effettuare query localmente.
 
 <p align="center">
  <img src="https://github.com/mariocuomo/sfingegram-progetto/blob/main/images%20for%20readme.md/3.png" width="550" height="400">
