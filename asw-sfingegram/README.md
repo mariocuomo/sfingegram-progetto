@@ -139,3 +139,7 @@ In prima battuta è stata realizzata la prima soluzione proposta che poi si è r
  <img src="https://github.com/mariocuomo/sfingegram-progetto/blob/main/images%20for%20readme.md/3.png" width="550" height="400">
 </p>
 
+
+La quarta operazione è stata quella di mandare in esecuzione più istanze dei servizi attraverso l’uso
+di docker-compose con il comando <br>
+`docker-compose up --scale enigmi=2 --scale enigmi-seguiti=2 --scale connessioni=2`
